@@ -216,8 +216,9 @@ with tab4:
             SELECT so.id, c.name, so.date, so.total
             FROM sales_orders so
             LEFT JOIN customers c ON so.customer_id = c.id
+            WHERE so.id = ?
             ORDER BY so.id DESC
-        """)
+        """, (pdf_order_id,))
     orders = cursor.fetchall()
 
     st.subheader("Invoice Preview")
@@ -232,7 +233,7 @@ with tab4:
 
 
     if st.button("Download Invoice as PDF"):
-        st.text_area(orders[0])
+        #st.text_area(orders[0])
         filename = export_invoice_pdf(orders[0], items, "invoice.pdf")
         with open(filename, "rb") as f:
             st.download_button(
