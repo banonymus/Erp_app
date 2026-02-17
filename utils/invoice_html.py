@@ -103,10 +103,10 @@ def export_invoice_pdf(order, items, filename="invoice.pdf"):
 
     # Header
     c.setFont("Helvetica-Bold", 20)
-    c.drawString(left, top, f"Invoice #{order['id']}")
+    c.drawString(left, top, f"Invoice #{order[0]['id']}")
 
     c.setFont("Helvetica", 12)
-    c.drawString(left, top - 15, f"Date: {order['date']}")
+    c.drawString(left, top - 15, f"Date: {order[0]['date']}")
 
     # Customer Info
     y = top - 40
