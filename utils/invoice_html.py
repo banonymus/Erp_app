@@ -71,9 +71,15 @@ def generate_invoice_html(order_id):
 
 
 
+from weasyprint import HTML, CSS
+
 def export_invoice_pdf(html, filename):
-    import pdfkit
-    path_wkhtmltopdf = r"d:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
-    config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
-    pdfkit.from_string(html, filename, configuration=config)
+    HTML(string=html).write_pdf(
+        filename,
+        stylesheets=[CSS(string="""
+            body { font-family: Arial; }
+            h1 { color: #333; }
+        """)]
+    )
     return filename
+

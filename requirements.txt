@@ -5,3 +5,4 @@ pdfkit
 python-dotenv
 xlsxwriter
 bcrypt
+weasyprint
