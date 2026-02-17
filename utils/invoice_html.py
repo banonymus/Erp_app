@@ -74,26 +74,29 @@ def generate_invoice_html(order_id):
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import mm
+from bs4 import BeautifulSoup
 
 def export_invoice_pdf(html, filename):
+    # Convert HTML → plain text (simple fallback)
+    soup = BeautifulSoup(html, "html.parser")
+    text = soup.get_text(separator="\n")
+
     c = canvas.Canvas(filename, pagesize=A4)
     width, height = A4
 
     y = height - 20*mm
-
-    # Very simple HTML-to-text fallback
-    text = html.replace("<br>", "\n").replace("<br/>", "\n")
-    lines = text.split("\n")
-
     c.setFont("Helvetica", 10)
 
-    for line in lines:
-        c.drawString(20*mm, y, line)
+    for line in text.split("\n"):
+        c.drawString(20*mm, y, line.strip())
         y -= 6*mm
+
         if y < 20*mm:
             c.showPage()
+            c.setFont("Helvetica", 10)
             y = height - 20*mm
 
     c.save()
     return filename
+
 
