@@ -238,7 +238,7 @@ with tab4:
 
         order = {
             "id": order_tuple[0],
-            "name": order_tuple[1],
+            "customer_name": order_tuple[1],
             "date": order_tuple[2],
             "total": order_tuple[3],
 
