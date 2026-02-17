@@ -71,15 +71,29 @@ def generate_invoice_html(order_id):
 
 
 
-from playwright.sync_api import sync_playwright
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import mm
 
 def export_invoice_pdf(html, filename):
-    with sync_playwright() as p:
-        browser = p.chromium.launch()
-        page = browser.new_page()
-        page.set_content(html)
-        pdf_bytes = page.pdf()
-        with open(filename, "wb") as f:
-            f.write(pdf_bytes)
+    c = canvas.Canvas(filename, pagesize=A4)
+    width, height = A4
+
+    y = height - 20*mm
+
+    # Very simple HTML-to-text fallback
+    text = html.replace("<br>", "\n").replace("<br/>", "\n")
+    lines = text.split("\n")
+
+    c.setFont("Helvetica", 10)
+
+    for line in lines:
+        c.drawString(20*mm, y, line)
+        y -= 6*mm
+        if y < 20*mm:
+            c.showPage()
+            y = height - 20*mm
+
+    c.save()
     return filename
 
