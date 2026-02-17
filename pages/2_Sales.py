@@ -233,8 +233,20 @@ with tab4:
 
 
     if st.button("Download Invoice as PDF"):
+
+        order_tuple = orders[0]
+
+        order = {
+            "id": order_tuple[0],
+            "date": order_tuple[1],
+            "customer_name": order_tuple[2],
+            "email": order_tuple[3],
+            "phone": order_tuple[4],
+            "total": order_tuple[5],
+        }
+
         #st.text_area(orders[0])
-        filename = export_invoice_pdf(orders[0], items, "invoice.pdf")
+        filename = export_invoice_pdf(order, items, "invoice.pdf")
         with open(filename, "rb") as f:
             st.download_button(
                 "Download PDF",
