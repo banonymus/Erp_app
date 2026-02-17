@@ -238,11 +238,10 @@ with tab4:
 
         order = {
             "id": order_tuple[0],
-            "date": order_tuple[1],
-            "customer_name": order_tuple[2],
-            "email": order_tuple[3],
-            "phone": order_tuple[4],
-            "total": order_tuple[5],
+            "name": order_tuple[1],
+            "order": order_tuple[2],
+            "total": order_tuple[3],
+            
         }
 
         #st.text_area(orders[0])
