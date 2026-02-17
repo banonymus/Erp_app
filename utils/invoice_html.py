@@ -71,15 +71,15 @@ def generate_invoice_html(order_id):
 
 
 
-from weasyprint import HTML, CSS
+from playwright.sync_api import sync_playwright
 
 def export_invoice_pdf(html, filename):
-    HTML(string=html).write_pdf(
-        filename,
-        stylesheets=[CSS(string="""
-            body { font-family: Arial; }
-            h1 { color: #333; }
-        """)]
-    )
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
+        page.set_content(html)
+        pdf_bytes = page.pdf()
+        with open(filename, "wb") as f:
+            f.write(pdf_bytes)
     return filename
 
