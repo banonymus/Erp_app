@@ -247,17 +247,17 @@ with tab4:
  
  """
 
-    if  st.button("Download Invoice as PDF"):
-        filename = export_invoice_pdf(orders, items, "invoice.pdf")
-        with open(filename, "rb") as f:
-            st.download_button(
-                "Download PDF",
-                f,
-                file_name="invoice.pdf",
-                mime="application/pdf"
-            )
-    else:
-        st.error("Order not found.")
+if st.button("Download Invoice as PDF"):
+    filename = export_invoice_pdf(orders, items, "invoice.pdf")
+    with open(filename, "rb") as f:
+        st.download_button(
+            "Download PDF",
+            f,
+            file_name="invoice.pdf",
+            mime="application/pdf"
+        )
+else:
+    st.error("Order not found.")
 
     st.subheader("Sales History")
 
