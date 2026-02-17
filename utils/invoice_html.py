@@ -73,30 +73,93 @@ def generate_invoice_html(order_id):
 
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
+from reportlab.lib import colors
+from reportlab.platypus import Table, TableStyle
 from reportlab.lib.units import mm
-from bs4 import BeautifulSoup
 
-def export_invoice_pdf(html, filename):
-    # Convert HTML → plain text (simple fallback)
-    soup = BeautifulSoup(html, "html.parser")
-    text = soup.get_text(separator="\n")
+def export_invoice_pdf(order, items, filename="invoice.pdf"):
+    """
+    order = {
+        "id": 1,
+        "date": "2026-02-10",
+        "customer_name": "Customer One",
+        "email": "cust@gmail.com",
+        "phone": "999999999",
+        "total": 600.00
+    }
+
+    items = [
+        ("Laptop 15\"", 1, 500.00),
+        ("LCD Screen 21\"", 1, 100.00)
+    ]
+    """
 
     c = canvas.Canvas(filename, pagesize=A4)
     width, height = A4
 
-    y = height - 20*mm
+    # Margins
+    left = 20 * mm
+    top = height - 20 * mm
+
+    # Header
+    c.setFont("Helvetica-Bold", 20)
+    c.drawString(left, top, f"Invoice #{order['id']}")
+
+    c.setFont("Helvetica", 12)
+    c.drawString(left, top - 15, f"Date: {order['date']}")
+
+    # Customer Info
+    y = top - 40
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(left, y, "Customer Information")
+
+    c.setFont("Helvetica", 12)
+    y -= 15
+    c.drawString(left, y, f"Name: {order['customer_name']}")
+    y -= 15
+    c.drawString(left, y, f"Email: {order['email']}")
+    y -= 15
+    c.drawString(left, y, f"Phone: {order['phone']}")
+
+    # Table of items
+    y -= 30
+
+    table_data = [["Product", "Qty", "Price (€)", "Total (€)"]]
+
+    for name, qty, price in items:
+        table_data.append([
+            name,
+            str(qty),
+            f"{price:.2f}",
+            f"{qty * price:.2f}"
+        ])
+
+    table = Table(table_data, colWidths=[80*mm, 20*mm, 30*mm, 30*mm])
+
+    table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), colors.lightgrey),
+        ("TEXTCOLOR", (0, 0), (-1, 0), colors.black),
+        ("ALIGN", (1, 1), (-1, -1), "CENTER"),
+        ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+        ("BOTTOMPADDING", (0, 0), (-1, 0), 8),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.grey),
+    ]))
+
+    table.wrapOn(c, width, height)
+    table.drawOn(c, left, y - len(table_data) * 18)
+
+    # Total
+    y -= len(table_data) * 18 + 30
+    c.setFont("Helvetica-Bold", 14)
+    c.drawString(left, y, f"Order Total: €{order['total']:.2f}")
+
+    # Footer
     c.setFont("Helvetica", 10)
-
-    for line in text.split("\n"):
-        c.drawString(20*mm, y, line.strip())
-        y -= 6*mm
-
-        if y < 20*mm:
-            c.showPage()
-            c.setFont("Helvetica", 10)
-            y = height - 20*mm
+    c.setFillColor(colors.grey)
+    c.drawString(left, 20*mm, "Thank you for your business!")
 
     c.save()
     return filename
+
 
 

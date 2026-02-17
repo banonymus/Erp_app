@@ -212,6 +212,14 @@ with tab4:
     """, (pdf_order_id,))
     items = cursor.fetchall()
 
+    cursor.execute("""
+            SELECT so.id, c.name, so.date, so.total
+            FROM sales_orders so
+            LEFT JOIN customers c ON so.customer_id = c.id
+            ORDER BY so.id DESC
+        """)
+    orders = cursor.fetchall()
+
     st.subheader("Invoice Preview")
 
     html = generate_invoice_html(pdf_order_id)
@@ -221,6 +229,7 @@ with tab4:
     else:
         st.error("Could not generate invoice.")
 
+"""
     if st.button("Download Invoice as PDF"):
         html = generate_invoice_html(pdf_order_id)
         if html:
@@ -233,9 +242,22 @@ with tab4:
                     data=f,
                     file_name=filename,
                     mime="application/pdf"
-                )
-        else:
-            st.error("Order not found.")
+ 
+               )
+ 
+ """
+
+    if  st.button("Download Invoice as PDF"):
+        filename = export_invoice_pdf(orders, items, "invoice.pdf")
+        with open(filename, "rb") as f:
+            st.download_button(
+                "Download PDF",
+                f,
+                file_name="invoice.pdf",
+                mime="application/pdf"
+            )
+    else:
+        st.error("Order not found.")
 
     st.subheader("Sales History")
 
@@ -315,3 +337,4 @@ with tab4:
         file_name="sales_items.xlsx",
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     )
+
