@@ -229,23 +229,7 @@ with tab4:
     else:
         st.error("Could not generate invoice.")
 
-"""
-    if st.button("Download Invoice as PDF"):
-        html = generate_invoice_html(pdf_order_id)
-        if html:
-            filename = f"invoice_{pdf_order_id}.pdf"
-            export_invoice_pdf(html, filename)
 
-            with open(filename, "rb") as f:
-                st.download_button(
-                    label="Download PDF",
-                    data=f,
-                    file_name=filename,
-                    mime="application/pdf"
- 
-               )
- 
- """
 
 if st.button("Download Invoice as PDF"):
     filename = export_invoice_pdf(orders, items, "invoice.pdf")
