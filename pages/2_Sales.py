@@ -232,7 +232,7 @@ with tab4:
 
 
     if st.button("Download Invoice as PDF"):
-        filename = export_invoice_pdf(orders, items, "invoice.pdf")
+        filename = export_invoice_pdf(orders[0], items, "invoice.pdf")
         with open(filename, "rb") as f:
             st.download_button(
                 "Download PDF",
