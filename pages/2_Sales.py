@@ -239,9 +239,9 @@ with tab4:
         order = {
             "id": order_tuple[0],
             "name": order_tuple[1],
-            "order": order_tuple[2],
+            "date": order_tuple[2],
             "total": order_tuple[3],
-            
+
         }
 
         #st.text_area(orders[0])
