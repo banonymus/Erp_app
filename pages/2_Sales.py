@@ -243,7 +243,7 @@ with tab4:
             "total": order_tuple[3],
 
         }
-
+        generate_invoice_html(order_id)
         #st.text_area(orders[0])
         filename = export_invoice_pdf(order, items, "invoice.pdf")
         with open(filename, "rb") as f:
