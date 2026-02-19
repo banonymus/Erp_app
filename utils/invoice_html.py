@@ -77,7 +77,7 @@ from reportlab.lib import colors
 from reportlab.platypus import Table, TableStyle
 from reportlab.lib.units import mm
 
-def export_invoice_pdf(order, items, filename="invoice.pdf"):
+def export_invoice_pdf(order_id, filename="invoice.pdf"):
     """
     order = {
         "id": 1,
@@ -93,6 +93,41 @@ def export_invoice_pdf(order, items, filename="invoice.pdf"):
         ("LCD Screen 21\"", 1, 100.00)
     ]
     """
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    # Fetch order
+    cursor.execute("""
+            SELECT so.id, so.date, so.total, c.name, c.email, c.phone
+            FROM sales_orders so
+            LEFT JOIN customers c ON so.customer_id = c.id
+            WHERE so.id = ?
+        """, (order_id,))
+    order = cursor.fetchone()
+
+    if not order:
+        return None
+
+    order_id, date, total, customer_name, email, phone = order
+
+    # Fetch items
+    cursor.execute("""
+            SELECT p.name, si.quantity, si.price
+            FROM sales_items si
+            LEFT JOIN products p ON si.product_id = p.id
+            WHERE si.order_id = ?
+        """, (order_id,))
+    items = cursor.fetchall()
+
+    conn.close()
+
+
+
+
+
+
+
+
 
     c = canvas.Canvas(filename, pagesize=A4)
     width, height = A4
