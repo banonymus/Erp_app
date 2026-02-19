@@ -186,7 +186,7 @@ def export_invoice_pdf(order_id, filename="invoice.pdf"):
     # Total
     y -= len(table_data) * 18 + 30
     c.setFont("Helvetica-Bold", 14)
-    c.drawString(left, y, f"Order Total: €{order['total']:.2f}")
+    c.drawString(left, y, f"Order Total: €{total:.2f}")
 
     # Footer
     c.setFont("Helvetica", 10)
