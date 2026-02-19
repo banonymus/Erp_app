@@ -119,7 +119,7 @@ def export_invoice_pdf(order, items, filename="invoice.pdf"):
     y -= 15
     #c.drawString(left, y, f"Email: {order['email']}")
     #y -= 15
-    c.drawString(left, y, f"Phone: {order['phone']}")
+    #c.drawString(left, y, f"Phone: {order['phone']}")
 
     # Table of items
     y -= 30
