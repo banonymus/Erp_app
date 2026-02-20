@@ -290,18 +290,6 @@ with tab4:
 
     st.dataframe(df_orders, use_container_width=True)
 
-
-    st.subheader("📤 Export Sales Orders")
-
-    excel_data = df_to_excel(df_orders)
-
-    st.download_button(
-        label="Download Sales Orders as Excel",
-        data=excel_data,
-        file_name="sales_orders.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
-
     from utils.emailer import send_invoice_email
     from utils.invoice_html import generate_invoice_html, export_invoice_pdf
     import streamlit as st
@@ -316,11 +304,11 @@ with tab4:
 
         # Get customer email
         cursor.execute("""
-                SELECT c.email
-                FROM sales_orders so
-                LEFT JOIN customers c ON so.customer_id = c.id
-                WHERE so.id = ?
-            """, (pdf_order_id,))
+                    SELECT c.email
+                    FROM sales_orders so
+                    LEFT JOIN customers c ON so.customer_id = c.id
+                    WHERE so.id = ?
+                """, (pdf_order_id,))
         customer_email = cursor.fetchone()[0]
 
         if customer_email:
@@ -336,6 +324,21 @@ with tab4:
                 st.error(f"Failed to send email: {e}")
         else:
             st.error("Customer email not found.")
+
+
+
+    st.subheader("📤 Export Sales Orders")
+
+    excel_data = df_to_excel(df_orders)
+
+    st.download_button(
+        label="Download Sales Orders as Excel",
+        data=excel_data,
+        file_name="sales_orders.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+
 
     st.markdown("#### 🧾 Order Details")
 
