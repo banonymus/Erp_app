@@ -18,6 +18,12 @@ def send_invoice_email(to_email, subject, body, pdf_path):
     msg["Subject"] = subject
     msg.set_content(body)
 
+    # Load template
+    from pathlib import Path
+
+    BASE_DIR = Path(__file__).resolve().parent
+
+    TEMPLATE_PATH = BASE_DIR.parent / "templates" 
     # Attach PDF
     with open(pdf_path, "rb") as f:
         pdf_data = f.read()
