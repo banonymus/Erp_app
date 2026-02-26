@@ -256,6 +256,43 @@ with tab4:
     else:
         st.error("Order not found.")
 
+    st.subheader("📧 Send Invoice by Email")
+
+    from utils.emailer import send_invoice_email
+    from utils.invoice_html import generate_invoice_html, export_invoice_pdf
+    import streamlit as st
+
+    if st.button("Send Invoice to Customer"):
+        # Generate invoice
+        html = generate_invoice_html(pdf_order_id)
+        filename = f"invoice_{pdf_order_id}.pdf"
+        export_invoice_pdf(html, filename)
+
+        # Get customer email
+        cursor.execute("""
+                       SELECT c.email
+                       FROM sales_orders so
+                       LEFT JOIN customers c ON so.customer_id = c.id
+                       WHERE so.id = ?
+                   """, (pdf_order_id,))
+        customer_email = cursor.fetchone()[0]
+
+        if customer_email:
+            try:
+                send_invoice_email(
+                    to_email=customer_email,
+                    subject=f"Invoice #{pdf_order_id}",
+                    body="Dear customer,\n\nPlease find your invoice attached.\n\nThank you!",
+                    pdf_path=filename
+                )
+                st.success(f"Invoice sent to {customer_email}")
+            except Exception as e:
+                st.error(f"Failed to send email: {e}")
+        else:
+            st.error("Customer email not found.")
+
+
+
     st.subheader("Sales History")
 
     if st.session_state.role != "admin":
@@ -290,43 +327,9 @@ with tab4:
 
     st.dataframe(df_orders, use_container_width=True)
 
-    from utils.emailer import send_invoice_email
-    from utils.invoice_html import generate_invoice_html, export_invoice_pdf
-    import streamlit as st
-
-    st.subheader("📧 Send Invoice by Email")
-
-    if st.button("Send Invoice to Customer"):
-        # Generate invoice
-        html = generate_invoice_html(pdf_order_id)
-        filename = f"invoice_{pdf_order_id}.pdf"
-        export_invoice_pdf(html, filename)
-
-        # Get customer email
-        cursor.execute("""
-                    SELECT c.email
-                    FROM sales_orders so
-                    LEFT JOIN customers c ON so.customer_id = c.id
-                    WHERE so.id = ?
-                """, (pdf_order_id,))
-        customer_email = cursor.fetchone()[0]
 
 
-
-        if customer_email:
-            try:
-                send_invoice_email(
-                    to_email=customer_email,
-                    subject=f"Invoice #{pdf_order_id}",
-                    body="Dear customer,\n\nPlease find your invoice attached.\n\nThank you!",
-                    pdf_path=filename
-                )
-                st.success(f"Invoice sent to {customer_email}")
-            except Exception as e:
-                st.error(f"Failed to send email: {e}")
-        else:
-            st.error("Customer email not found.")
-
+    
 
 
     st.subheader("📤 Export Sales Orders")

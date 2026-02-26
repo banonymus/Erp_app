@@ -27,8 +27,6 @@ def send_invoice_email(to_email, subject, body, pdf_path):
 
     TEMPLATE_PATH = BASE_DIR.parent / "invoice.pdf"
 
-    
-
     # Attach PDF
     with open(TEMPLATE_PATH, "rb") as f:
         pdf_data = f.read()
