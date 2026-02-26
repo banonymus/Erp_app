@@ -39,7 +39,7 @@ def send_invoice_email(to_email, subject, body, pdf_path):
             pdf_data,
             maintype="application",
             subtype="pdf",
-            filename=os.path.basename(pdf_path)
+            filename=os.path.basename(TEMPLATE_PATH)
         )
 
     # Send email
