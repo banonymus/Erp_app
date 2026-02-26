@@ -311,6 +311,11 @@ with tab4:
                 """, (pdf_order_id,))
         customer_email = cursor.fetchone()[0]
 
+        import os
+
+        st.write("Current working directory:", os.getcwd())
+        st.write("Files in directory:", os.listdir())
+
         if customer_email:
             try:
                 send_invoice_email(
