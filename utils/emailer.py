@@ -33,7 +33,7 @@ def send_invoice_email(to_email, subject, body, pdf_path):
     st.write("Files in directory:", os.listdir())
 
     # Attach PDF
-    with open(pdf_path, "rb") as f:
+    with open(TEMPLATE_PATH, "rb") as f:
         pdf_data = f.read()
         msg.add_attachment(
             pdf_data,
