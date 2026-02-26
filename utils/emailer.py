@@ -25,7 +25,7 @@ def send_invoice_email(to_email, subject, body, pdf_path):
 
     BASE_DIR = Path(__file__).resolve().parent
 
-    TEMPLATE_PATH = BASE_DIR.parent / "templates"
+    TEMPLATE_PATH = BASE_DIR.parent / "invoice.pdf"
 
     import os
 
