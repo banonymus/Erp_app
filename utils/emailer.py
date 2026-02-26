@@ -27,10 +27,7 @@ def send_invoice_email(to_email, subject, body, pdf_path):
 
     TEMPLATE_PATH = BASE_DIR.parent / "invoice.pdf"
 
-    import os
-
-    st.write("Current working directory:", os.getcwd())
-    st.write("Files in directory:", os.listdir())
+    
 
     # Attach PDF
     with open(TEMPLATE_PATH, "rb") as f:
