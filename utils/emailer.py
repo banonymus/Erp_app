@@ -3,6 +3,8 @@ import ssl
 from email.message import EmailMessage
 from dotenv import load_dotenv
 import os
+import streamlit as st
+
 
 load_dotenv()
 
