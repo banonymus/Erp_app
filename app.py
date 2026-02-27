@@ -4,7 +4,7 @@ from utils.auth import authenticate
 import pandas as pd
 from database.db import get_connection
 from utils.theme import load_theme
-load_theme()
+
 from utils.settings import get_settings
 settings = get_settings()
 
@@ -14,7 +14,7 @@ st.sidebar.write(settings[4])
 
 if "theme" not in st.session_state:
     st.session_state.theme = settings[6]
-
+load_theme()
 theme_choice = st.sidebar.radio("Theme", ["light", "dark"])
 st.session_state.theme = theme_choice
 
