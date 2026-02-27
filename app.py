@@ -12,6 +12,8 @@ st.sidebar.markdown(f"**{settings[1]}**")
 st.sidebar.write(settings[4])
 
 
+if "theme" not in st.session_state:
+    st.session_state.theme = settings[6]
 
 theme_choice = st.sidebar.radio("Theme", ["light", "dark"])
 st.session_state.theme = theme_choice
