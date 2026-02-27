@@ -5,6 +5,13 @@ import pandas as pd
 from database.db import get_connection
 from utils.theme import load_theme
 load_theme()
+from utils.settings import get_settings
+settings = get_settings()
+
+st.sidebar.markdown(f"**{settings[1]}**")
+st.sidebar.write(settings[4])
+
+
 
 theme_choice = st.sidebar.radio("Theme", ["light", "dark"])
 st.session_state.theme = theme_choice

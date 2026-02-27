@@ -2,6 +2,9 @@ from jinja2 import Template
 from database.db import get_connection
 import pdfkit
 import os
+from utils.settings import get_settings
+settings = get_settings()
+
 
 def generate_invoice_html(order_id):
     conn = get_connection()
@@ -63,7 +66,12 @@ def generate_invoice_html(order_id):
         email=email,
         phone=phone,
         items_html=items_html,
-        total=f"{total:.2f}"
+        total=f"{total:.2f}",
+        company_name=settings[1],
+        company_address=settings[2],
+        company_phone=settings[3],
+        company_email=settings[4],
+        invoice_footer=settings[5]
     )
 
     return html
@@ -139,6 +147,10 @@ def export_invoice_pdf(order_id, filename="invoice.pdf"):
     # Header
     c.setFont("Helvetica-Bold", 20)
     c.drawString(left, top, f"Invoice #{order_id}")
+
+
+
+
 
     c.setFont("Helvetica", 12)
     c.drawString(left, top - 15, f"Date: {date}")

@@ -77,5 +77,24 @@ def init_db():
         )
     """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS company_settings (
+            id INTEGER PRIMARY KEY,
+            company_name TEXT,
+            address TEXT,
+            phone TEXT,
+            email TEXT,
+            invoice_footer TEXT,
+            logo BLOB,
+            theme_default TEXT DEFAULT 'light'
+        )
+    """)
+    cursor.execute("SELECT COUNT(*) FROM company_settings")
+    if cursor.fetchone()[0] == 0:
+        cursor.execute("""
+            INSERT INTO company_settings (id, company_name, address, phone, email, invoice_footer)
+            VALUES (1, 'My Company', 'Address', '0000000000', 'info@example.com', 'Thank you for your business!')
+        """)
+
     conn.commit()
     conn.close()

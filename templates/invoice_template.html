@@ -41,6 +41,18 @@
     <p>Date: {{ date }}</p>
 </div>
 
+<div class="header">
+    <h1>{{ company_name }}</h1>
+    <p>{{ company_address }}<br>
+    Phone: {{ company_phone }} | Email: {{ company_email }}</p>
+</div>
+
+
+
+
+
+
+
 <div class="customer-info">
     <h3>Customer Information</h3>
     <p><strong>{{ customer_name }}</strong><br>
@@ -61,9 +73,11 @@
 
 <p class="total">Order Total: €{{ total }}</p>
 
+
 <div class="footer">
-    <p>Thank you for your business!</p>
+    <p>{{ invoice_footer }}</p>
 </div>
+
 
 </body>
 </html>
