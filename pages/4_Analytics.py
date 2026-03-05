@@ -21,7 +21,7 @@ df_items = pd.read_sql_query("""
 conn.close()
 
 # Convert date column
-df_orders["date"] = pd.to_datetime(df_orders["date"] ,format="%d-%m-%Y")
+df_orders["date"] = pd.to_datetime(df_orders["date"] )
 
 col1, col2, col3, col4 = st.columns(4)
 
