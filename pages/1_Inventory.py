@@ -35,6 +35,7 @@ with tab1:
         sku = st.text_input("SKU")
         quantity = st.number_input("Quantity", min_value=0)
         price = st.number_input("Price (€)", min_value=0.0)
+        category = st.text_input("categoty")
         submitted = st.form_submit_button("Save Product")
 
         if submitted:
