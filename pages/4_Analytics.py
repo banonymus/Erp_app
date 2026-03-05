@@ -41,7 +41,8 @@ monthly_sales = df_orders.groupby("month")["total"].sum().reset_index()
 fig = px.line(monthly_sales, x="month", y="total", title="Sales per Month")
 st.plotly_chart(fig, use_container_width=True)
 
-
+if "total" not in df_items.columns:
+    df_items["total"] = df_items["price"] * df_items["quantity"]
 category_sales = df_items.groupby("category")["total"].sum().reset_index()
 
 fig = px.pie(category_sales, names="category", values="total",
