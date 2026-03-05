@@ -95,7 +95,7 @@ with tab3:
         selected_product = st.selectbox("Select a product", list(product_dict.keys()))
         product_id = product_dict[selected_product]
 
-        cursor.execute("SELECT name, sku, quantity, price FROM products WHERE id = ?", (product_id,))
+        cursor.execute("SELECT name, sku, quantity, price,category FROM products WHERE id = ?", (product_id,))
         product = cursor.fetchone()
 
         name_edit, sku_edit, qty_edit, price_edit,category_edit = product
