@@ -60,7 +60,7 @@ with tab2:
     rows = cursor.fetchall()
 
     if rows:
-        df = pd.DataFrame(rows, columns=["ID", "Name", "SKU", "Quantity", "Price"])
+        df = pd.DataFrame(rows, columns=["ID", "Name", "SKU", "Quantity", "Price","category"])
 
         if search:
             df = df[df["Name"].str.contains(search, case=False) | df["SKU"].str.contains(search, case=False)]
@@ -98,14 +98,14 @@ with tab3:
         cursor.execute("SELECT name, sku, quantity, price FROM products WHERE id = ?", (product_id,))
         product = cursor.fetchone()
 
-        name_edit, sku_edit, qty_edit, price_edit = product
+        name_edit, sku_edit, qty_edit, price_edit,category_edit = product
 
         with st.form("edit_product_form"):
             new_name = st.text_input("Product Name", value=name_edit)
             new_sku = st.text_input("SKU", value=sku_edit)
             new_qty = st.number_input("Quantity", min_value=0, value=qty_edit)
             new_price = st.number_input("Price (€)", min_value=0.0, value=price_edit)
-
+            new_category= st.text_input("category", value=category_edit)
             update_btn = st.form_submit_button("Update Product")
 
             if update_btn:
