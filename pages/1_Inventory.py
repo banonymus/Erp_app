@@ -111,9 +111,9 @@ with tab3:
             if update_btn:
                 cursor.execute("""
                     UPDATE products
-                    SET name = ?, sku = ?, quantity = ?, price = ?
+                    SET name = ?, sku = ?, quantity = ?, price = ? ,category = ?
                     WHERE id = ?
-                """, (new_name, new_sku, new_qty, new_price, product_id))
+                """, (new_name, new_sku, new_qty, new_price, new_category,product_id))
                 conn.commit()
                 st.success("Product updated successfully!")
     else:
