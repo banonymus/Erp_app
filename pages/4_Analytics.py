@@ -13,7 +13,7 @@ df_orders = pd.read_sql_query("SELECT * FROM sales_orders", conn)
 
 # Load sales items
 df_items = pd.read_sql_query("""
-    SELECT si.*, p.name AS product_name, p.category
+    SELECT si.*, p.name AS product_name
     FROM sales_items si
     LEFT JOIN products p ON si.product_id = p.id
 """, conn)
