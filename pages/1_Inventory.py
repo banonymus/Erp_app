@@ -150,7 +150,7 @@ with tab5:
         rows = cursor.fetchall()
 
     if rows:
-        df = pd.DataFrame(rows, columns=["ID", "Name", "SKU", "Quantity", "Price"])
+        df = pd.DataFrame(rows, columns=["ID", "Name", "SKU", "Quantity", "Price","category"])
 
         # KPIs
         total_products = len(df)
@@ -161,6 +161,7 @@ with tab5:
         col1.metric("Total Products", total_products)
         col2.metric("Total Stock Units", total_stock)
         col3.metric("Inventory Value (€)", f"{inventory_value:,.2f}")
+
 
         # Low stock
         st.subheader("Low Stock Alerts")
