@@ -2,7 +2,7 @@
 import streamlit as st
 from utils.auth import authenticate
 import pandas as pd
-from database.db import get_connection
+from database.sqllite_db import get_connection
 from utils.theme import load_theme
 
 from utils.settings import get_settings

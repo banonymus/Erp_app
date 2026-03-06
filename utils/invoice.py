@@ -1,6 +1,6 @@
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
-from database.db import get_connection
+from database.sqllite_db import get_connection
 import os
 
 def generate_invoice(order_id, filename="invoice.pdf"):

@@ -1,4 +1,4 @@
-from database.db import get_connection
+from database.sqllite_db import get_connection
 
 def get_settings():
     conn = get_connection()

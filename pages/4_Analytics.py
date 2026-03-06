@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from database.db import get_connection
+from database.sqllite_db import get_connection
 
 st.title("📈 Advanced Analytics Dashboard")
 

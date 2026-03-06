@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from database.db import get_connection
+from database.sqllite_db import get_connection
 from utils.exporter import df_to_excel
 
 if "logged_in" not in st.session_state or not st.session_state.logged_in:

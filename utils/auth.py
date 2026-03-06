@@ -1,6 +1,6 @@
 import bcrypt
 import sqlite3
-from database.db import get_connection
+from database.sqllite_db import get_connection
 
 def hash_password(password):
     return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()

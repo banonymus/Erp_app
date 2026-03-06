@@ -9,3 +9,4 @@ weasyprint
 playwright
 reportlab
 beautifulsoup4
+psycopg2-binary

@@ -1,5 +1,5 @@
 from jinja2 import Template
-from database.db import get_connection
+from database.sqllite_db import get_connection
 import pdfkit
 import os
 from utils.settings import get_settings

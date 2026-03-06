@@ -1,4 +1,4 @@
-from database.db import init_db
+from database.sqllite_db import init_db
 
 init_db()
 print("Database initialized successfully.")
